@@ -1,0 +1,31 @@
+.Renderer
+{
+    height: 100%;
+    
+    display: grid;
+    grid-template-rows: calc(100% - 40px);
+
+    margin: 10px auto;
+}
+
+.RendererWrapper
+{
+    width: 90vw;
+    margin: 0 auto;
+}
+
+.Renderer .Document
+{
+    height: 100%;
+
+    display: grid;
+    justify-items: center;
+
+    grid-auto-flow: column;
+}
+
+.Renderer .Document > .Page
+{
+    opacity: 1;
+    transition: 75ms;
+}

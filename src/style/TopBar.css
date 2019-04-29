@@ -1,0 +1,58 @@
+.TopBar
+{
+    display: grid;
+    grid-auto-flow: column;
+
+    background-color: rgb(218, 218, 218);
+    
+    box-shadow: 1px 1px 10px gray;
+
+    height: 40px;
+}
+
+.PageController
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+
+    grid-template-rows: 30px;
+    width: 100px;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.PageController input
+{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 5px;
+
+    width: 30px;
+    /* height: 30px; */
+
+    border: none;
+
+    box-shadow: 1px 1px 1px 1px gray;
+
+    margin: 0 auto;
+}
+
+::placeholder
+{
+    color: black;
+}
+
+.PageController p
+{
+    padding: 5px;
+    border-radius: 5px;
+
+    width: 50px;
+
+    border: none;
+
+    margin: 0 auto;
+}
