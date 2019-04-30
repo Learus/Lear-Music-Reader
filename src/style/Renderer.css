@@ -3,9 +3,11 @@
     height: 100%;
     
     display: grid;
+
+    /* 40 px because TopBar */
     grid-template-rows: calc(100% - 40px);
 
-    margin: 10px auto;
+    margin: 50px auto;
 }
 
 .RendererWrapper
@@ -20,6 +22,8 @@
 
     display: grid;
     justify-items: center;
+
+    margin: auto auto;
 
     grid-auto-flow: column;
 }

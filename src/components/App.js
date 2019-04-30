@@ -4,6 +4,8 @@ import TopBar from "./TopBar";
 import "../style/App.css";
 
 const autoBind = require('auto-bind');
+// const electron = window.require('electron');
+// const remote = electron.remote;
 
 class App extends Component
 {
@@ -15,7 +17,7 @@ class App extends Component
             document: "./data/Mozart.pdf",
             numPages: 0,
             pageNumber: 1,
-            pagesToDisplay: 1
+            pagesToDisplay: 2
         }
 
         autoBind(this);
@@ -114,7 +116,9 @@ class App extends Component
             <div className="App">
                 <TopBar numPages={this.state.numPages}
                         pageNumber={this.state.pageNumber}
+                        pagesToDisplay={this.state.pagesToDisplay}
                         pageNumberHandler={this.pageNumberHandler}
+                        pagesToDisplayHandler={this.pagesToDisplayHandler}
                 />
                 <Renderer document={this.state.document}
                           pagesToDisplay={this.state.pagesToDisplay}

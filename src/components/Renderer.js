@@ -18,7 +18,8 @@ class Renderer extends Component
 
         this.state = {
             width: 100,
-            height: 100
+            height: 100,
+            orientation: 'landscape'
         };
 
         autoBind(this);
@@ -49,9 +50,12 @@ class Renderer extends Component
     
     setDivSize() 
     {
+        let width = this.rendererWrapper.getBoundingClientRect().width;
+        let height = this.rendererWrapper.getBoundingClientRect().height;
         this.setState({
-            width: this.rendererWrapper.getBoundingClientRect().width,
-            height: this.rendererWrapper.getBoundingClientRect().height
+            width: width,
+            height: height,
+            orientation: width > height ? "landscape" : "portrait"
         });
     }
     
@@ -69,14 +73,19 @@ class Renderer extends Component
             pageNumbers.push(this.props.pageNumber + i);
         }
 
-        const width = this.state.width;
-        const height = this.state.height;
         const pagesToDisplay = this.props.pagesToDisplay;
+        const orientation = this.state.orientation;
+        const width = this.state.width;
+        const height = this.state.height - 50;
 
         const pages = pageNumbers.map( function(num) {
-            if (width > height)
+            if (orientation === 'landscape')
+            {
+                
                 return <Page pageNumber={num} height={height} key={num} className="Page" />;
-            else
+            }
+                
+            else 
                 return <Page pageNumber={num} width={width / pagesToDisplay} key={num} className="Page" />;
         });
 
@@ -89,7 +98,6 @@ class Renderer extends Component
                         onSwipedRight={this.props.PrevPage}
                         trackMouse={true}
                     >
-                        {/* <PinchView> */}
                             <Document
                                 file={this.props.document}
                                 onLoadSuccess={this.onDocumentLoadSuccess}
@@ -97,7 +105,6 @@ class Renderer extends Component
                             >
                                 {pages}
                             </Document>
-                        {/* </PinchView> */}
                     </Swipeable>
                 </div>
             </div>
