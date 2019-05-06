@@ -4,8 +4,9 @@ import TopBar from "./TopBar";
 import "../style/App.css";
 
 const autoBind = require('auto-bind');
-// const electron = window.require('electron');
-// const remote = electron.remote;
+const electron = window.require('electron');
+const fs = electron.remote.require('fs');
+const { ipcRenderer } = window.require('electron');
 
 class App extends Component
 {
@@ -13,8 +14,11 @@ class App extends Component
     {
         super(props);
 
+        let openFile = fs.readFileSync("./public/data/cache.json", 'utf8');
+        openFile = JSON.parse(openFile).openFile;
+
         this.state = {
-            document: "./data/Mozart.pdf",
+            document: openFile,
             numPages: 0,
             pageNumber: 1,
             pagesToDisplay: 2
@@ -39,8 +43,37 @@ class App extends Component
 
     documentHandler(document)
     {
+        let cache = fs.readFileSync("./public/data/cache.json", 'utf8');
+        cache = JSON.parse(cache);
+
+        const ret = ipcRenderer.sendSync('symLinkCreate', document);
+
+        cache.openFile = ret;
+
+        // Remove it if you find it
+        const index = cache.recentFiles.indexOf(cache.openFile);
+        if (index !== -1) cache.recentFiles.splice(index, 1);
+
+        cache.recentFiles.unshift(cache.openFile);
+        
+        if (cache.recentFiles.length > cache.maxRecentFiles)
+        {
+            cache.recentfiles.pop();
+        }
+
+        const jsonToWrite = JSON.stringify(cache);
+        fs.writeFile("./public/data/cache.json", jsonToWrite, function(err)
+        {
+            if (err)
+            {
+                console.error(err);
+            }
+        });
+
         this.setState({
-            document: document
+            document: ret,
+            numPages: 0,
+            pageNumber: 1,
         })
     }
 
@@ -117,6 +150,7 @@ class App extends Component
                 <TopBar numPages={this.state.numPages}
                         pageNumber={this.state.pageNumber}
                         pagesToDisplay={this.state.pagesToDisplay}
+                        documentHandler={this.documentHandler}
                         pageNumberHandler={this.pageNumberHandler}
                         pagesToDisplayHandler={this.pagesToDisplayHandler}
                 />

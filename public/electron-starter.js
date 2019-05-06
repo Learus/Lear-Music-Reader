@@ -1,11 +1,10 @@
-const electron = require('electron');
+const electron  = require('electron');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
 const path = require('path');
-const url = require('url');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -13,20 +12,25 @@ let mainWindow;
 
 function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({ width: 800, height: 600, show: false });
+    mainWindow = new BrowserWindow({ 
+        webPreferences: {
+            nodeIntegration: true
+        },
+        width: 800,
+        height: 600,
+        show: false 
+    });
     mainWindow.maximize();
     mainWindow.setMenuBarVisibility(false);
     mainWindow.show();
 
     // and load the index.html of the app.
-    // const startUrl = process.env.ELECTRON_START_URL || url.format({
-    //     pathname: path.join(__dirname, '/../build/index.html'),
-    //     protocol: 'file:',
-    //     slashes: true
-    // });
-    // mainWindow.loadURL(startUrl);
+    const startUrl = process.env.ELECTRON_START_URL || `file://${path.join(__dirname, '../build/index.html')}`;
+    console.log(startUrl);
+    mainWindow.loadURL(startUrl);
 
-    mainWindow.loadURL('http://localhost:3000');
+    // mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`)
+    // mainWindow.loadURL('http://localhost:3000');
 
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
@@ -61,6 +65,15 @@ app.on('activate', function () {
         createWindow()
     }
 });
+
+const { ipcMain } = require('electron');
+ipcMain.on('symLinkCreate', (event, document) => {
+    const childProcess = require('child_process');
+    
+    childProcess.spawnSync("ln", ["-s", document, `./public/links/${document.split('\\').pop().split('/').pop()}.ln`]);
+
+    event.returnValue = `./links/${document.split('\\').pop().split('/').pop()}.ln`;
+})
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

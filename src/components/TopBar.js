@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import "../style/TopBar.css";
 
 const autoBind = require("auto-bind");
+const electron = window.require('electron');
+const dialog = electron.remote.dialog
 
 class TopBar extends Component
 {
@@ -16,7 +18,7 @@ class TopBar extends Component
     {
         return (
             <div className="TopBar">
-                <DocumentSelection />
+                <DocumentSelection onChange={this.props.documentHandler}/>
                 <PageController numPages={this.props.numPages} pageNumber={this.props.pageNumber} onChange={this.props.pageNumberHandler}/>
                 <PageDisplayController numPages={this.props.numPages} pagesToDisplay={this.props.pagesToDisplay} onChange={this.props.pagesToDisplayHandler}/>
             </div>
@@ -33,10 +35,26 @@ class DocumentSelection extends Component
         autoBind(this);
     }
 
+    onClick()
+    {
+        const onChange = this.props.onChange;
+
+        dialog.showOpenDialog({
+            properties: ['openFile']
+        },
+        function(files)
+        {
+            if (files !== undefined)
+            {
+                onChange(files[0]);
+            }
+        })
+    }
+
     render()
     {
         return (
-            <button>
+            <button onClick={this.onClick}>
                 Open File
             </button>
         )
@@ -100,16 +118,10 @@ class PageController extends Component
                             }}
                             tabIndex="-1"
                     />
-                    {/* <button>
-                        &larr;
-                    </button> */}
                 </form>
 
                 <p>
                     of {this.props.numPages}
-                    {/* <button>
-                        &rarr;
-                    </button> */}
                 </p>
             </div>
         );

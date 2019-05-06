@@ -88,7 +88,7 @@ class Renderer extends Component
             else 
                 return <Page pageNumber={num} width={width / pagesToDisplay} key={num} className="Page" />;
         });
-
+        
         return (
             <div className="Renderer">
 
