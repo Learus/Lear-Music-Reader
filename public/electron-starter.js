@@ -26,7 +26,6 @@ function createWindow() {
 
     // and load the index.html of the app.
     const startUrl = process.env.ELECTRON_START_URL || `file://${path.join(__dirname, '../build/index.html')}`;
-    console.log(startUrl);
     mainWindow.loadURL(startUrl);
 
     // mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`)
@@ -66,14 +65,13 @@ app.on('activate', function () {
     }
 });
 
+
 const { ipcMain } = require('electron');
 ipcMain.on('symLinkCreate', (event, document) => {
     const childProcess = require('child_process');
+    console.log(document);
     
     childProcess.spawnSync("ln", ["-s", document, `./public/links/${document.split('\\').pop().split('/').pop()}.ln`]);
 
     event.returnValue = `./links/${document.split('\\').pop().split('/').pop()}.ln`;
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

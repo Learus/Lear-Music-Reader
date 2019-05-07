@@ -1,7 +1,5 @@
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
 
 # testing
 /coverage
@@ -12,7 +10,8 @@ dist/*
 /build
 dist
 
-public/links
+# data
+public/links/*
 
 # misc
 .DS_Store

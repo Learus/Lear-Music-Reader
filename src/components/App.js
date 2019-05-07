@@ -14,14 +14,14 @@ class App extends Component
     {
         super(props);
 
-        let openFile = fs.readFileSync("./public/data/cache.json", 'utf8');
-        openFile = JSON.parse(openFile).openFile;
+        let cache = fs.readFileSync("./public/data/cache.json", 'utf8');
+        cache = JSON.parse(cache);
 
         this.state = {
-            document: openFile,
+            document: cache.openFile,
             numPages: 0,
             pageNumber: 1,
-            pagesToDisplay: 2
+            pagesToDisplay: cache.pagesToDisplay
         }
 
         autoBind(this);
@@ -36,6 +36,20 @@ class App extends Component
 
     pagesToDisplayHandler(pagesToDisplay)
     {
+        let cache = fs.readFileSync("./public/data/cache.json", 'utf8');
+        cache = JSON.parse(cache);
+        cache.pagesToDisplay = pagesToDisplay;
+
+        const jsonToWrite = JSON.stringify(cache);
+
+        fs.writeFile("./public/data/cache.json", jsonToWrite, function(err)
+        {
+            if (err)
+            {
+                console.error(err);
+            }
+        });
+
         this.setState({
             pagesToDisplay: pagesToDisplay
         })
@@ -73,7 +87,7 @@ class App extends Component
         this.setState({
             document: ret,
             numPages: 0,
-            pageNumber: 1,
+            pageNumber: 1
         })
     }
 

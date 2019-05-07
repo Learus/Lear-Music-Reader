@@ -56,16 +56,43 @@ class Renderer extends Component
             width: width,
             height: height,
             orientation: width > height ? "landscape" : "portrait"
-        });
+        }, this.setPadding());
+    }
+
+    setPadding()
+    {
+        let elems = document.getElementsByClassName("Document");
+
+        if (!elems && elems.length <= 0) return;
+
+        let doc = elems[0];
+
+        elems = document.getElementsByClassName("Swipeable")
+
+        if (!elems && elems.length <= 0) return;
+
+        let swip = elems[0];
+
+        // console.log("swip: " + swip.clientHeight)
+        // console.log("doc: " + doc.clientHeight)
+
+        let padding = (swip.clientHeight - doc.clientHeight) / 2
+        // console.log("pad: " + padding)
+        if (padding < 0) padding = 0;
+
+        doc.style.padding = `${padding}px 0`
     }
     
     onDocumentLoadSuccess({ numPages })
     {
         this.props.numPagesHandler(numPages);
+        this.setPadding();
     }
 
     render() 
     {
+        console.log(this.props.document);
+        
         let pageNumbers = [];
         for (let i = 0; i < this.props.pagesToDisplay; i++)
         {
@@ -78,22 +105,28 @@ class Renderer extends Component
         const width = this.state.width;
         const height = this.state.height - 50;
 
+        let docHeight = document.getElementsByClassName("Document")[0];
+        if (docHeight)
+        {
+            docHeight = docHeight.clientHeight;
+            console.log(height + " < " + docHeight + " == " + (height < docHeight))
+        }
+
         const pages = pageNumbers.map( function(num) {
-            if (orientation === 'landscape')
+            if (orientation === 'landscape' && height < docHeight)
             {
-                
                 return <Page pageNumber={num} height={height} key={num} className="Page" />;
             }
-                
             else 
                 return <Page pageNumber={num} width={width / pagesToDisplay} key={num} className="Page" />;
         });
-        
+
         return (
             <div className="Renderer">
 
                 <div className="RendererWrapper" ref={(ref)=>this.rendererWrapper = ref}>
                     <Swipeable
+                        className="Swipeable"
                         onSwipedLeft={this.props.NextPage}
                         onSwipedRight={this.props.PrevPage}
                         trackMouse={true}
