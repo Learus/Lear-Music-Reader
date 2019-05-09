@@ -26,6 +26,7 @@ function createWindow() {
 
     // and load the index.html of the app.
     const startUrl = process.env.ELECTRON_START_URL || `file://${path.join(__dirname, '../build/index.html')}`;
+    console.log(startUrl);
     mainWindow.loadURL(startUrl);
 
     // mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`)
@@ -74,4 +75,9 @@ ipcMain.on('symLinkCreate', (event, document) => {
     childProcess.spawnSync("ln", ["-s", document, `./public/links/${document.split('\\').pop().split('/').pop()}.ln`]);
 
     event.returnValue = `./links/${document.split('\\').pop().split('/').pop()}.ln`;
+})
+
+ipcMain.on('reload', (event) => {
+    mainWindow.reload();
+    // event.returnValue = true;
 })

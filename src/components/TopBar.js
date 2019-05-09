@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Metronome from './Metronome'
 import "../style/TopBar.css";
 
 const autoBind = require("auto-bind");
@@ -21,6 +22,7 @@ class TopBar extends Component
                 <DocumentSelection onChange={this.props.documentHandler}/>
                 <PageController numPages={this.props.numPages} pageNumber={this.props.pageNumber} onChange={this.props.pageNumberHandler}/>
                 <PageDisplayController numPages={this.props.numPages} pagesToDisplay={this.props.pagesToDisplay} onChange={this.props.pagesToDisplayHandler}/>
+                {/* <Metronome/> */}
             </div>
         );
     }
@@ -33,6 +35,20 @@ class DocumentSelection extends Component
         super(props);
 
         autoBind(this);
+    }
+
+    componentDidMount()
+    {
+        document.onkeydown = (e) =>
+        {
+            console.log("key press");
+            e = e || window.event;
+
+            if (e.code === '79') {
+                console.log("ctrl o");
+                this.onClick();
+            }
+        }
     }
 
     onClick()

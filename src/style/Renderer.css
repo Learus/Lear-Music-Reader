@@ -16,15 +16,18 @@
     margin: 0 auto;
 }
 
-.Swipeable
+.Renderer .Swipeable
 {
     height: 100%;
 }
 
+.Renderer .DocumentWrapper
+{
+    /* height: 100%; */
+}
+
 .Renderer .Document
 {
-    /* padding: 70px 0; */
-    /* height: 100%; */
     display: grid;
     justify-items: center;
 

@@ -50,6 +50,8 @@ class App extends Component
             }
         });
 
+        ipcRenderer.send('reload');
+
         this.setState({
             pagesToDisplay: pagesToDisplay
         })
@@ -125,7 +127,7 @@ class App extends Component
 
     PrevPage()
     {
-        if (this.state.pageNumber < 1) 
+        if (this.state.pageNumber < 1 || this.state.pageNumber - this.state.pagesToDisplay < 1) 
         {
             this.setState({pageNumber: 1})
             return;
