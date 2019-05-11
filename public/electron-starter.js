@@ -1,4 +1,5 @@
 const electron  = require('electron');
+const fs = require('fs');
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
@@ -11,6 +12,23 @@ const path = require('path');
 let mainWindow;
 
 function createWindow() {
+
+    // const stats = fs.lstatSync("./public/data/cache.json");
+    if (!fs.existsSync("./public/data/cache.json"))
+    {
+        const cache = {
+            openFile: "",
+            recentFiles: [],
+            maxRecentFiles: 10,
+            pagesToDisplay: 1
+        }
+
+        fs.writeFile('./public/data/cache.json', JSON.stringify(cache), function (err) {
+            if (err) throw err;
+            console.log('Created cache!');
+        });
+    }
+
     // Create the browser window.
     mainWindow = new BrowserWindow({ 
         webPreferences: {
@@ -70,7 +88,6 @@ app.on('activate', function () {
 const { ipcMain } = require('electron');
 ipcMain.on('symLinkCreate', (event, document) => {
     const childProcess = require('child_process');
-    console.log(document);
     
     childProcess.spawnSync("ln", ["-s", document, `./public/links/${document.split('\\').pop().split('/').pop()}.ln`]);
 

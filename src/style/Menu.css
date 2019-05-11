@@ -1,0 +1,66 @@
+.MenuButton
+{
+    float: left !important;
+
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 5px;
+
+    height: 30px;
+    color: white;
+
+    outline: none;
+    border: none;
+
+    box-shadow: 1px 1px 1px 1px gray;
+
+    margin: 5px 10px;
+
+    float:left;
+    transition: 200ms;
+
+    background-color: rgb(233, 231, 231);
+    width: 40px;
+}
+
+.MenuButton:hover
+{
+    background-color: rgb(207, 207, 207);
+    cursor: pointer;
+}
+
+.MenuButton:active, .MenuButton.Open
+{
+    background-color: rgb(177, 177, 177);
+    box-shadow: -1px -1px 1px 1px gray;
+}
+
+.MenuImg
+{
+    filter: brightness(100%);
+    padding: 4px 0;
+    margin: 0 auto;
+    height: 60%;
+}
+
+.MenuSideBar
+{
+    position: fixed;
+    height: 100%;
+    width: 0px;
+    opacity: 0;
+
+    transition: 200ms;
+
+    background-color: white;
+
+    box-shadow: 1px 1px 10px gray;
+
+    margin-top: 40px;
+}
+
+.MenuSideBar header
+{
+    margin: 10px;
+    color: rgb(0, 153, 255);
+}

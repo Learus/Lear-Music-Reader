@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import Metronome from './Metronome'
+
+import Menu from './Menu'
+
 import "../style/TopBar.css";
+
 
 const autoBind = require("auto-bind");
 const electron = window.require('electron');
@@ -19,7 +23,8 @@ class TopBar extends Component
     {
         return (
             <div className="TopBar">
-                <DocumentSelection onChange={this.props.documentHandler}/>
+                <Menu open={false} documentHandler={this.props.documentHandler}/>
+                <DocumentSelection document={this.props.document} onChange={this.props.documentHandler}/>
                 <PageController numPages={this.props.numPages} pageNumber={this.props.pageNumber} onChange={this.props.pageNumberHandler}/>
                 <PageDisplayController numPages={this.props.numPages} pagesToDisplay={this.props.pagesToDisplay} onChange={this.props.pagesToDisplayHandler}/>
                 {/* <Metronome/> */}
@@ -27,6 +32,7 @@ class TopBar extends Component
         );
     }
 }
+
 
 class DocumentSelection extends Component
 {
@@ -70,9 +76,12 @@ class DocumentSelection extends Component
     render()
     {
         return (
-            <button onClick={this.onClick}>
-                Open File
-            </button>
+            <div className="OpenFile">
+                <button className="OpenFileButton" onClick={this.onClick}>
+                    Open File
+                </button>
+                {this.props.document}
+            </div>
         )
     }
 }

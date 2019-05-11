@@ -59,6 +59,7 @@ class App extends Component
 
     documentHandler(document)
     {
+        console.log(document);
         let cache = fs.readFileSync("./public/data/cache.json", 'utf8');
         cache = JSON.parse(cache);
 
@@ -163,7 +164,8 @@ class App extends Component
     {
         return (
             <div className="App">
-                <TopBar numPages={this.state.numPages}
+                <TopBar document={this.state.document}
+                        numPages={this.state.numPages}
                         pageNumber={this.state.pageNumber}
                         pagesToDisplay={this.state.pagesToDisplay}
                         documentHandler={this.documentHandler}

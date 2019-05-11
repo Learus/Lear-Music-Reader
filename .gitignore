@@ -12,6 +12,7 @@ dist
 
 # data
 public/links/*
+public/data/cache.json
 
 # misc
 .DS_Store
