@@ -18,6 +18,7 @@ class App extends Component
         cache = JSON.parse(cache);
 
         this.state = {
+            recentFiles: cache.recentFiles,
             document: cache.openFile,
             numPages: 0,
             pageNumber: 1,
@@ -50,7 +51,7 @@ class App extends Component
             }
         });
 
-        ipcRenderer.send('reload');
+        // ipcRenderer.send('reload');
 
         this.setState({
             pagesToDisplay: pagesToDisplay
@@ -59,9 +60,10 @@ class App extends Component
 
     documentHandler(document)
     {
-        console.log(document);
+        if (`${document}.ln` === this.state.document) return;
+
         let cache = fs.readFileSync("./public/data/cache.json", 'utf8');
-        cache = JSON.parse(cache);
+        cache = JSON.parse(cache);  
 
         const ret = ipcRenderer.sendSync('symLinkCreate', document);
 
@@ -88,6 +90,7 @@ class App extends Component
         });
 
         this.setState({
+            recentFiles: cache.recentFiles,
             document: ret,
             numPages: 0,
             pageNumber: 1
@@ -168,6 +171,7 @@ class App extends Component
                         numPages={this.state.numPages}
                         pageNumber={this.state.pageNumber}
                         pagesToDisplay={this.state.pagesToDisplay}
+                        recentFiles={this.state.recentFiles}
                         documentHandler={this.documentHandler}
                         pageNumberHandler={this.pageNumberHandler}
                         pagesToDisplayHandler={this.pagesToDisplayHandler}

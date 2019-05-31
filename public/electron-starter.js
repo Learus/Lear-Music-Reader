@@ -1,9 +1,12 @@
 const electron  = require('electron');
+const { ipcMain } = require('electron');
 const fs = require('fs');
+
 // Module to control application life.
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
+
 
 const path = require('path');
 
@@ -13,7 +16,7 @@ let mainWindow;
 
 function createWindow() {
 
-    // const stats = fs.lstatSync("./public/data/cache.json");
+    // Init cache file
     if (!fs.existsSync("./public/data/cache.json"))
     {
         const cache = {
@@ -29,7 +32,6 @@ function createWindow() {
         });
     }
 
-    // Create the browser window.
     mainWindow = new BrowserWindow({ 
         webPreferences: {
             nodeIntegration: true
@@ -38,22 +40,17 @@ function createWindow() {
         height: 600,
         show: false 
     });
+
     mainWindow.maximize();
     mainWindow.setMenuBarVisibility(false);
     mainWindow.show();
 
-    // and load the index.html of the app.
+    // Choose between localhost or build/index.html
     const startUrl = process.env.ELECTRON_START_URL || `file://${path.join(__dirname, '../build/index.html')}`;
     console.log(startUrl);
     mainWindow.loadURL(startUrl);
 
-    // mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`)
-    // mainWindow.loadURL('http://localhost:3000');
 
-    // Open the DevTools.
-    mainWindow.webContents.openDevTools();
-
-    // Emitted when the window is closed.
     mainWindow.on('closed', function () {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
@@ -85,7 +82,7 @@ app.on('activate', function () {
 });
 
 
-const { ipcMain } = require('electron');
+
 ipcMain.on('symLinkCreate', (event, document) => {
     const childProcess = require('child_process');
     

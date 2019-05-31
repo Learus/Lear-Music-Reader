@@ -23,7 +23,7 @@ class TopBar extends Component
     {
         return (
             <div className="TopBar">
-                <Menu open={false} documentHandler={this.props.documentHandler}/>
+                <Menu open={false} recentFiles={this.props.recentFiles} documentHandler={this.props.documentHandler}/>
                 <DocumentSelection document={this.props.document} onChange={this.props.documentHandler}/>
                 <PageController numPages={this.props.numPages} pageNumber={this.props.pageNumber} onChange={this.props.pageNumberHandler}/>
                 <PageDisplayController numPages={this.props.numPages} pagesToDisplay={this.props.pagesToDisplay} onChange={this.props.pagesToDisplayHandler}/>
@@ -75,12 +75,15 @@ class DocumentSelection extends Component
 
     render()
     {
+        let fileName = `${this.props.document.split(/[\\/]/).pop()}`
+        fileName = fileName.substr(0, fileName.lastIndexOf('.'));
+
         return (
             <div className="OpenFile">
                 <button className="OpenFileButton" onClick={this.onClick}>
                     Open File
                 </button>
-                {this.props.document}
+                {fileName}
             </div>
         )
     }

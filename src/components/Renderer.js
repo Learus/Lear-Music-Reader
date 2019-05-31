@@ -72,7 +72,7 @@ class Renderer extends Component {
         let width = this.rendererWrapper.getBoundingClientRect().width;
         let height = this.rendererWrapper.getBoundingClientRect().height;
 
-        console.log("rend width: " + width + " height: " + height)
+        // console.log("rend width: " + width + " height: " + height)
 
         this.setState({
             width: width,
@@ -100,7 +100,7 @@ class Renderer extends Component {
 
         if (padding === this.state.docStyle.padding) return 0;
 
-        console.log("swip " + swipHeight + " - doc " + docHeight + " = state: " + this.state.docStyle.padding + ", now: " + padding);
+        // console.log("swip " + swipHeight + " - doc " + docHeight + " = state: " + this.state.docStyle.padding + ", now: " + padding);
 
         this.setState({
             docHeight: docHeight,

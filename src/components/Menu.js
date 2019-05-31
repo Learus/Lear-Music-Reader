@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import Popup from 'reactjs-popup';
 import MenuImg from "./images/menu.png";
 
 import "../style/Menu.css";
@@ -14,11 +14,6 @@ class Menu extends Component
     {
         super(props);
 
-        this.state = {
-            open: this.props.open,
-            files: []
-        }
-
         autoBind(this);
     }
 
@@ -29,8 +24,7 @@ class Menu extends Component
 
     onRecentClick(file)
     {
-        this.props.documentHandler(`"./links/${file}`);
-        this.getRecents();
+        this.props.documentHandler(`./links/${file}`);
     }
 
     getRecents()
@@ -38,61 +32,73 @@ class Menu extends Component
         let cache = fs.readFileSync("./public/data/cache.json", 'utf8');
         cache = JSON.parse(cache);
 
-        this.setState({
-            files: cache.recentFiles
-        })
+        return cache.recentFiles;
     }
 
-    open()
-    {
-        this.setState({
-            sideBarStyle: { width: "30%", opacity: "1"},
-            open: !this.state.open
-        })
-    }
 
-    close()
+    clear()
     {
+        let cache = fs.readFileSync("./public/data/cache.json", 'utf8');
+        cache = JSON.parse(cache);
+
+        cache.recentFiles = [];
+
+        const jsonToWrite = JSON.stringify(cache);
+        fs.writeFile("./public/data/cache.json", jsonToWrite, function(err)
+        {
+            if (err)
+            {
+                console.error(err);
+            }
+        });
+
         this.setState({
-            sideBarStyle: { width: "0px", opacity: "0"},
-            open: !this.state.open
+            files: []
         })
     }
 
     render()
     {
-        const files = this.state.files.map( (file, index) => {
+        const files = this.getRecents().map( (file) => {
             let toRender = `${file.split(/[\\/]/).pop()}`
             toRender = toRender.substr(0, toRender.lastIndexOf('.'));
 
             return (
-                <li key={file}>
-                    <button onClick={() => {this.onRecentClick(toRender)}}>
-                        {toRender}
-                    </button>
-                </li>
+                <button key={file} onClick={() => {this.onRecentClick(toRender)}}>
+                    {toRender}
+                </button>
             )
         })
-        return (
-            <div className="Menu">
-                <button 
-                    className={this.state.open ? "MenuButton Open" : "MenuButton Closed"} 
-                    onClick= {this.state.open ? this.close : this.open }>
-                    <img className="MenuImg" alt="" src={MenuImg}/>
-                </button>
 
-                <div className="MenuSideBar" style={this.state.sideBarStyle}>
+        return (
+            <Popup 
+                className="Menu"
+                trigger = {
+                    open => (
+                        <button 
+                            className={open ? "MenuButton Open" : "MenuButton Closed"} 
+                            onClick={this.open}
+                        >
+                            <img className="MenuImg" alt="" src={MenuImg}/>
+                        </button>
+                    )
+                }
+                position="bottom left"
+                arrow={false}
+            >
+                <div>
                     <header>
                         Recent Files
-                        
                     </header>
-                    <ol>
-                        {files}
-                    </ol>
-                </div>
-            </div>
-            
 
+                    {files}
+
+                    <button id="ClearRecentButton" onClick={this.clear}>
+                        Clear
+                    </button>
+                </div>
+                
+            </Popup>
         );
     }
 }
