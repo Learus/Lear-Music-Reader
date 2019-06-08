@@ -3,7 +3,7 @@ import Popup from 'reactjs-popup';
 import MenuImg from "./images/menu.png";
 import Metronome from './Metronome'
 
-import "../style/Menu.css";
+import "../css/Menu.css";
 
 const autoBind = require('auto-bind');
 const electron = window.require('electron');

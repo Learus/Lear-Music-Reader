@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import Menu from './Menu'
 
-import "../style/TopBar.css";
+import "../css/TopBar.css";
 
 
 const autoBind = require("auto-bind");

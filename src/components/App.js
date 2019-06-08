@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Renderer from "./Renderer";
 import TopBar from "./TopBar";
-import "../style/App.css";
+import "../css/App.css";
 
 const autoBind = require('auto-bind');
 const electron = window.require('electron');

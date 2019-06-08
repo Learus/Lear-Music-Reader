@@ -4,7 +4,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import { Swipeable } from 'react-swipeable';
 import throttle from "lodash.throttle"
 
-import "../style/Renderer.css";
+import "../css/Renderer.css";
 
 
 const autoBind = require("auto-bind");

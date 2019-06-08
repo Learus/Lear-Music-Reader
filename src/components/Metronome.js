@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Bar from './sound/Bar.wav';
 import Beat from './sound/Beat.wav';
-import '../style/Metronome.css';
-import '../style/InputRange.css'
+import '../css/Metronome.css';
+import '../css/InputRange.css'
 
 class Metronome extends Component {
     constructor(props) {
