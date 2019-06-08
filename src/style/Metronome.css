@@ -2,43 +2,24 @@
     text-align: center;
     display: grid;
 
-    grid-template-columns: 1fr 1fr 1fr;
-    /* max-width: 375px; */
-    margin: 0 auto;
-    /* padding: 30px; */
+    grid-template-rows: 1fr 1fr 1.2fr;
 }
 
+.MetronomeSlider
+{
+    border-radius: 5px;
+    font-size: 16px;
+    padding: 10px;
+
+    margin: 10px auto;
+}
 
 .Metronome > button
 {
-    background-color: rgb(0, 153, 255);
-    border-radius: 5px;
-    font-size: 16px;
-    padding: 5px;
+    background-color: rgb(0, 153, 255) !important;
+    color: white !important;
 
-    width: 100px;
-    height: 30px;
-    color: white;
-
-    outline: none;
-    border: none;
-
-    box-shadow: 1px 1px 1px 1px gray;
-
-    margin: 5px 10px;
-
-    float:left;
-    transition: 200ms;
-}
-
-.Metronome > button:hover
-{
-    background-color: rgb(1, 127, 211);
-    cursor: pointer;
-}
-
-.Metronome > button:active
-{
-    background-color: rgb(3, 118, 196);
-    box-shadow: -1px -1px 1px 1px gray;
+    height: 38px !important;
+    width: 50% !important;
+    margin: 12px auto !important;
 }

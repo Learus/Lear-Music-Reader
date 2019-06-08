@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Popup from 'reactjs-popup';
 import MenuImg from "./images/menu.png";
+import Metronome from './Metronome'
 
 import "../style/Menu.css";
 
@@ -38,13 +39,15 @@ class Menu extends Component
 
     clear()
     {
-        let cache = fs.readFileSync("./public/data/cache.json", 'utf8');
+        const cacheName = "./public/data/cache.json";
+
+        let cache = fs.readFileSync(cacheName, 'utf8');
         cache = JSON.parse(cache);
 
         cache.recentFiles = [];
 
         const jsonToWrite = JSON.stringify(cache);
-        fs.writeFile("./public/data/cache.json", jsonToWrite, function(err)
+        fs.writeFile(cacheName, jsonToWrite, function(err)
         {
             if (err)
             {
@@ -52,10 +55,23 @@ class Menu extends Component
             }
         });
 
+        const directory = "./public/links/";
+
+        fs.readdir(directory, (err, files) => {
+            if (err) throw err;
+          
+            for (const file of files) {
+                fs.unlink(require('path').join(directory, file), err => {
+                    if (err) throw err;
+                });
+            }
+        });
+
         this.setState({
             files: []
         })
     }
+
 
     render()
     {
@@ -96,6 +112,14 @@ class Menu extends Component
                     <button id="ClearRecentButton" onClick={this.clear}>
                         Clear
                     </button>
+
+                    {/* <div className="Line"/>
+
+                    <header>
+                        Metronome
+                    </header>
+
+                    <Metronome/> */}
                 </div>
                 
             </Popup>

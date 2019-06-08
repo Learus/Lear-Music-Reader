@@ -96,7 +96,7 @@ class Metronome extends Component {
 
         return (
             <div className="Metronome">
-                <div className="bpmSlider">
+                <div className="MetronomeSlider">
                     <div>{bpm} BPM</div>
                     <input
                         type="range"
@@ -106,7 +106,7 @@ class Metronome extends Component {
                         onChange={this.handleBpmChange} />
                 </div>
 
-                <div className="beatsPerMeasure">
+                <div className="MetronomeSlider">
                     <div>Beats / Measure: {beatsPerMeasure}</div>
                     <input  
                         type="range"

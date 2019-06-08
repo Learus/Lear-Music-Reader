@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Metronome from './Metronome'
+
 
 import Menu from './Menu'
 
