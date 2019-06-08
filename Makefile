@@ -14,6 +14,9 @@ erase:
 	@rm -rf node_modules
 
 build:
+	@npm run build
+
+pack:
 	@npm run electron-pack
 
 install:

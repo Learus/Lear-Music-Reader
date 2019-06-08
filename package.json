@@ -1,5 +1,7 @@
 {
     "name": "lear-music-reader",
+    "author": "Learus",
+    "description": "A minimal pdf reader specialized in music sheet reading.",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -11,19 +13,18 @@
         "react-swipeable": "^5.2.0"
     },
     "homepage": "./",
-    "main": "public/electron-starter.js",
+    "main": "public/electron.js",
     "scripts": {
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "react-start": "BROWSER=none $(npm bin)/react-scripts start",
-        "electron-start": "ELECTRON_DEV=1 $(npm bin)/electron .",
         "start": "concurrently \"npm run react-start\" \"wait-on http://localhost:3000/ && npm run electron-start\"",
         "dev": "concurrently \"npm run react-start\" \"wait-on http://localhost:3000/ && npm run electron-dev\"",
-        "electron": "electron .",
+        "electron-start": "electron .",
         "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
         "preelectron-pack": "npm run build",
-        "electron-pack": "build -c.extraMetadata.main=build/electron-starter.js"
+        "electron-pack": "$(npm bin)/electron-packager ./build/ --overwrite"
     },
     "eslintConfig": {
         "extends": "react-app"
@@ -45,6 +46,7 @@
         "create-symlink": "^1.0.0",
         "electron": "^5.0.0",
         "electron-builder": "^20.39.0",
+        "electron-packager": "^13.1.1",
         "reactjs-popup": "^1.3.2",
         "typescript": "^3.4.5"
     },

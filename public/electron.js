@@ -47,7 +47,6 @@ function createWindow() {
 
     // Choose between localhost or build/index.html
     const startUrl = process.env.ELECTRON_START_URL || `file://${path.join(__dirname, '../build/index.html')}`;
-    console.log(startUrl);
     mainWindow.loadURL(startUrl);
 
 

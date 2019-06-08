@@ -9,7 +9,7 @@ import "../css/Renderer.css";
 
 const autoBind = require("auto-bind");
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = "./pdf.worker.js"
 
 class Renderer extends Component {
     constructor(props) {

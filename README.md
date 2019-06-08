@@ -1,13 +1,14 @@
 # Lear Music Reader - In Development
 
-A pdf reader specialized in music sheet reading.
+A minimal pdf reader specialized in music sheet reading.
 
 Features - Goals:
 
 - [x] Horizontal page turning
-- [x] Touch Functionality (Swipe to turn)
+- [x] Swipe to turn
+- [ ] Zoom - Pan
 - [x] Metronome
 - [x]  Recently used files tab
-- [ ] Full screen
+- [ ] Mobile Version
 - [ ] Annotations?
-- [ ] More formats later (musx, png, jpg, ebook etc)
+- [ ] More formats (musx, png, jpg, ebook etc)
