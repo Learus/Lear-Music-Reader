@@ -9,6 +9,7 @@ dev:
 clean:
 	@rm -rf build
 	@rm -rf dist
+	@rm -rf lear-music*
 
 erase:
 	@rm -rf node_modules

@@ -8,13 +8,16 @@ const electron = window.require('electron');
 const fs = electron.remote.require('fs');
 const { ipcRenderer } = window.require('electron');
 
+const public_dir = process.env.PUBLIC_URL || "./public";
+
+
 class App extends Component
 {
     constructor(props)
     {
         super(props);
 
-        let cache = fs.readFileSync("./public/data/cache.json", 'utf8');
+        let cache = fs.readFileSync(public_dir + "/data/cache.json", 'utf8');
         cache = JSON.parse(cache);
 
         this.state = {
@@ -37,13 +40,13 @@ class App extends Component
 
     pagesToDisplayHandler(pagesToDisplay)
     {
-        let cache = fs.readFileSync("./public/data/cache.json", 'utf8');
+        let cache = fs.readFileSync(public_dir + "/data/cache.json", 'utf8');
         cache = JSON.parse(cache);
         cache.pagesToDisplay = pagesToDisplay;
 
         const jsonToWrite = JSON.stringify(cache);
 
-        fs.writeFile("./public/data/cache.json", jsonToWrite, function(err)
+        fs.writeFile(public_dir + "/data/cache.json", jsonToWrite, function(err)
         {
             if (err)
             {
@@ -62,7 +65,7 @@ class App extends Component
     {
         if (`${document}.ln` === this.state.document) return;
 
-        let cache = fs.readFileSync("./public/data/cache.json", 'utf8');
+        let cache = fs.readFileSync(public_dir + "/data/cache.json", 'utf8');
         cache = JSON.parse(cache);  
 
         const ret = ipcRenderer.sendSync('symLinkCreate', document);
@@ -81,7 +84,7 @@ class App extends Component
         }
 
         const jsonToWrite = JSON.stringify(cache);
-        fs.writeFile("./public/data/cache.json", jsonToWrite, function(err)
+        fs.writeFile(public_dir + "/data/cache.json", jsonToWrite, function(err)
         {
             if (err)
             {

@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import Popup from 'reactjs-popup';
 import MenuImg from "./images/menu.png";
-import Metronome from './Metronome'
+// import Metronome from './Metronome'
 
 import "../css/Menu.css";
 
 const autoBind = require('auto-bind');
 const electron = window.require('electron');
 const fs = electron.remote.require('fs');
+
+
+const public_dir = process.env.PUBLIC_URL || "./public";
 
 class Menu extends Component
 {
@@ -30,7 +33,7 @@ class Menu extends Component
 
     getRecents()
     {
-        let cache = fs.readFileSync("./public/data/cache.json", 'utf8');
+        let cache = fs.readFileSync(public_dir + "/data/cache.json", 'utf8');
         cache = JSON.parse(cache);
 
         return cache.recentFiles;
@@ -39,7 +42,7 @@ class Menu extends Component
 
     clear()
     {
-        const cacheName = "./public/data/cache.json";
+        const cacheName = public_dir + "/data/cache.json";
 
         let cache = fs.readFileSync(cacheName, 'utf8');
         cache = JSON.parse(cache);
@@ -55,7 +58,7 @@ class Menu extends Component
             }
         });
 
-        const directory = "./public/links/";
+        const directory = public_dir + "/links/";
 
         fs.readdir(directory, (err, files) => {
             if (err) throw err;

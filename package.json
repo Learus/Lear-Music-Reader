@@ -23,8 +23,9 @@
         "dev": "concurrently \"npm run react-start\" \"wait-on http://localhost:3000/ && npm run electron-dev\"",
         "electron-start": "electron .",
         "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
-        "preelectron-pack": "npm run build",
-        "electron-pack": "$(npm bin)/electron-packager ./build/ --overwrite"
+        "electron-pack": "$(npm bin)/electron-packager ./build/ --overwrite ; cp ./package.json lear*",
+        "pack": "electron-builder --dir",
+        "dist": "npx build --x64 --linux --c.extraMetadata.main=build/electron.js -p always"
     },
     "eslintConfig": {
         "extends": "react-app"
@@ -52,12 +53,23 @@
     },
     "build": {
         "appId": "nonExistentID",
-        "files": [
-            "build/**/*",
-            "node_modules/**/*"
-        ],
         "directories": {
-            "buildResources": "public"
-        }
+            "buildResources": "build",
+            "output" : "dist"
+        },
+        "linux": {
+			"icon": "assets/icon.png",
+			"target": [
+				"snap",
+				"AppImage"
+			],
+			"description": "Example",
+			"category": "Network;Feed",
+			"publish": {
+				"provider": "s3",
+				"bucket": "example-releases",
+				"path": "releases"
+			}
+		}
     }
 }
