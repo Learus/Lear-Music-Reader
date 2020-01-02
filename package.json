@@ -9,7 +9,7 @@
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "react-pdf": "^4.0.5",
-        "react-scripts": "3.0.0",
+        "react-scripts": "^3.3.0",
         "react-swipeable": "^5.2.0"
     },
     "homepage": "./",
@@ -55,21 +55,21 @@
         "appId": "nonExistentID",
         "directories": {
             "buildResources": "build",
-            "output" : "dist"
+            "output": "dist"
         },
         "linux": {
-			"icon": "assets/icon.png",
-			"target": [
-				"snap",
-				"AppImage"
-			],
-			"description": "Example",
-			"category": "Network;Feed",
-			"publish": {
-				"provider": "s3",
-				"bucket": "example-releases",
-				"path": "releases"
-			}
-		}
+            "icon": "assets/icon.png",
+            "target": [
+                "snap",
+                "AppImage"
+            ],
+            "description": "Example",
+            "category": "Network;Feed",
+            "publish": {
+                "provider": "s3",
+                "bucket": "example-releases",
+                "path": "releases"
+            }
+        }
     }
 }
